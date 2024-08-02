@@ -47,7 +47,7 @@ const Sidebar = () => {
           <NavLink
             to={"/search"}
             className={({ isActive, isPending }) =>
-              `flex items-center gap-4 py-3 px-6${
+              `flex items-center gap-4 py-3 px-6 ${
                 isActive ? "text-[#152a16] bg-[#d4e9ff] px-6" : " "
               }`
             }
@@ -58,7 +58,7 @@ const Sidebar = () => {
           <NavLink
             to={"/about"}
             className={({ isActive, isPending }) =>
-              `flex items-center gap-4 py-3 px-6${
+              `flex items-center gap-4 py-3 px-6 ${
                 isActive ? "text-[#152a16] bg-[#d4e9ff] px-6" : " "
               }`
             }
@@ -68,7 +68,7 @@ const Sidebar = () => {
           <NavLink
             to={"/favorites"}
             className={({ isActive, isPending }) =>
-              `flex items-center gap-4 py-3 px-6${
+              `flex items-center gap-4 py-3 px-6 ${
                 isActive ? "text-[#152a16] bg-[#d4e9ff] px-6" : " "
               }`
             }
@@ -78,7 +78,7 @@ const Sidebar = () => {
           <NavLink
             to={"/help"}
             className={({ isActive, isPending }) =>
-              `flex items-center gap-4 py-3 px-6${
+              `flex items-center gap-4 py-3 px-6 ${
                 isActive ? "text-[#152a16] bg-[#d4e9ff] px-6" : " "
               }`
             }
@@ -88,7 +88,7 @@ const Sidebar = () => {
           <NavLink
             to={"/setting"}
             className={({ isActive, isPending }) =>
-              `flex items-center gap-4 py-3 px-6${
+              `flex items-center gap-4 py-3 px-6 ${
                 isActive ? "text-[#152a16] bg-[#d4e9ff] px-6" : " "
               }`
             }
