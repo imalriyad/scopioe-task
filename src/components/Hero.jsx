@@ -2,7 +2,7 @@
 import heroImg from "../assets/heroimg.png"
 const Hero = () => {
   return (
-    <div className="bg-white md:p-10 p-6 rounded-lg flex md:flex-row md:gap-4 gap-8 lg:gap-0 flex-col justify-between items-center  h-auto my-6 w-[96%] mx-auto border">
+    <div className="bg-white md:p-10 p-6 rounded-lg flex md:flex-row md:gap-4 gap-8 lg:gap-0 flex-col justify-between items-center h-auto my-6 w-[96%] mx-auto border">
       <div className="space-y-3">
         <h1 className="text-2xl text-[#152A16] font-medium">
           I'm Looking for Massage Therapist Near...
