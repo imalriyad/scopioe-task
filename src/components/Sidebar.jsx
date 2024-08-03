@@ -75,6 +75,7 @@ const Sidebar = () => {
           >
             <img src={heartIcon} alt="" /> Favorites
           </NavLink>
+          <hr className="py-1"/>
           <NavLink
             to={"/help"}
             className={({ isActive, isPending }) =>
