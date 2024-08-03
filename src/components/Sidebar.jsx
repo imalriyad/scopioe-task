@@ -10,7 +10,7 @@ import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <div className="min-h-screen  text-center border-r-[1px] border-r-[#E7E7E7]">
+    <div className="min-h-screen text-center border-r-[1px] border-r-[#E7E7E7]">
       <div>
         <div className="py-10 px-6">
           <h1 className="text-5xl text-[#4285F3] font-poorRich uppercase">
