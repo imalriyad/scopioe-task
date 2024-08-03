@@ -126,7 +126,7 @@ const Navbar = () => {
             </h1>
           </div>
           <div className="flex gap-3 items-center">
-            <img src={bellIcon} className="w-[30px]" alt="" />
+            <img src={bellIcon} className="w-[30px] cursor-pointer" alt="" />
             <img src={menuIcon} onClick={()=> setOpenMenu(true)} className="w-[25px]" alt="" />
           </div>
         </div>
@@ -144,7 +144,7 @@ const Navbar = () => {
           </div>
 
           <div className="flex gap-8 items-center">
-            <img src={bellIcon} alt="" />
+            <img src={bellIcon} className="cursor-pointer"  alt="" />
             <span className="flex items-center gap-2 font-medium text-[#F15E4A]">
               Log Out
               <img src={logoutIcon} alt="" />

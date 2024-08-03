@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import NewCompo from "../components/NewCompo";
+import Home from "../pages/Home";
 
 const router = createBrowserRouter([
   {
@@ -8,8 +9,8 @@ const router = createBrowserRouter([
     element: <MainLayout></MainLayout>,
     children: [
       {
-        path: "/home",
-        element: <MainLayout></MainLayout>,
+        path: "/",
+        element: <Home></Home>,
       },
       {
         path: "/new-listing",
