@@ -38,7 +38,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    fetch("/public/therapistInfo.json")
+    fetch("/therapistInfo.json")
       .then((res) => res.json())
       .then((data) => setTherapist(data));
   }, []);
