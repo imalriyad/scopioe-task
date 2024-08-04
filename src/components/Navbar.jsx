@@ -1,10 +1,11 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
 import profilePic from "../assets/dp.png";
 import bellIcon from "../assets/notification.png";
 import logoutIcon from "../assets/logout.png";
 import menuIcon from "../assets/menu.png";
 import bigProfile from "../assets/bigdp.png";
-import closeIcon from "../assets/icons8-close-window-100.png"
+import closeIcon from "../assets/icons8-close-window-100.png";
 import homeIcon from "../assets/home.png";
 import peopleIcon from "../assets/people.png";
 import searchIcon from "../assets/searchicon.png";
@@ -13,28 +14,45 @@ import heartIcon from "../assets/heart.png";
 import helpIcon from "../assets/help.png";
 import settingIcon from "../assets/setting.png";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
-
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpenMenu, setOpenMenu] = useState(false);
+  const [user, setUser] = useState(false);
+ 
 
   return (
     <>
       {/* Mobile side menu */}
       <div
-        className={`min-h-screen absolute top-0 right-0 w-[260px] block lg:hidden ${isOpenMenu?"block":"hidden"}`}
+        className={`min-h-screen bg-slate-100 z-10 absolute top-0 right-0 w-[260px] block lg:hidden ${
+          isOpenMenu ? "block" : "hidden"
+        }`}
       >
         <div className="flex justify-between bg-[#156BCA]">
           {/* This div is needed */}
-          <div>
-            <img src={closeIcon} onClick={()=> setOpenMenu(false)} className="w-[40px]" alt="" />
+          <div className="cursor-pointer">
+            <img
+              src={closeIcon}
+              onClick={() => setOpenMenu(false)}
+              className="w-[40px]"
+              alt=""
+            />
           </div>
-          <div className=" text-right pr-4 py-6">
-            <img src={bigProfile} className="mx-auto pl-10" alt="" />
-            <h1 className="text-2xl text-white pt-4">AL Riyad</h1>
-            <p className="text-[#1A2634] text-xs pt-1">imalriyad@gmqil.com</p>
-          </div>
+          {user ? (
+            <div className=" text-right pr-4 py-6">
+              <img src={bigProfile} className="mx-auto pl-10" alt="" />
+              <h1 className="text-2xl text-white pt-4">AL Riyad</h1>
+              <p className="text-[#1A2634] text-xs pt-1">imalriyad@gmqil.com</p>
+            </div>
+          ) : (
+            <Link to={"/registration"}>
+              <span className="flex items-center py-2 gap-2 font-semibold text-white">
+                Log In
+                <img src={logoutIcon} alt="" />
+              </span>
+            </Link>
+          )}
         </div>
         {/* NavItem */}
         <div className="list-none text-left text-[#5C635A] space-y-2">
@@ -127,7 +145,12 @@ const Navbar = () => {
           </div>
           <div className="flex gap-3 items-center">
             <img src={bellIcon} className="w-[30px] cursor-pointer" alt="" />
-            <img src={menuIcon} onClick={()=> setOpenMenu(true)} className="w-[25px]" alt="" />
+            <img
+              src={menuIcon}
+              onClick={() => setOpenMenu(true)}
+              className="w-[25px] cursor-pointer"
+              alt=""
+            />
           </div>
         </div>
       </div>
@@ -135,20 +158,35 @@ const Navbar = () => {
       {/* desktop navbar */}
       <div className="lg:block hidden">
         <div className="w-full border-b-[1px] border-b-[#E7E7E7] px-8 items-center flex justify-between h-20">
-          <div className="flex items-start gap-3">
-            <img src={profilePic} alt="" />
-            <span className="flex flex-col ">
-              <h1 className="font-medium text-[#152a16]">Al Riyad</h1>
-              <p className="text-xs text-[#5C635A]">imalriyad@gmail.com</p>
-            </span>
-          </div>
-
-          <div className="flex gap-8 items-center">
-            <img src={bellIcon} className="cursor-pointer"  alt="" />
-            <span className="flex items-center gap-2 font-medium text-[#F15E4A]">
-              Log Out
-              <img src={logoutIcon} alt="" />
-            </span>
+          {user ? (
+            <div className="flex items-start gap-3">
+              <img src={profilePic} alt="" />
+              <span className="flex flex-col ">
+                <h1 className="font-medium text-[#152a16]">Al Riyad</h1>
+                <p className="text-xs text-[#5C635A]">imalriyad@gmail.com</p>
+              </span>
+            </div>
+          ) : (
+            <h1 className="text-[#4285F3] text-2xl font-semibold">
+              How's your day going?
+            </h1>
+          )}
+          ,
+          <div className="flex gap-6 items-center">
+            <img src={bellIcon} className="cursor-pointer" alt="" />
+            {!user ? (
+              <Link to={"/login"}>
+                <span className="flex items-center gap-2 font-semibold text-[#F15E4A]">
+                  Log In
+                  <img src={logoutIcon} alt="" />
+                </span>
+              </Link>
+            ) : (
+              <span className="flex items-center gap-2 font-semibold text-[#F15E4A]">
+                Log Out
+                <img src={logoutIcon} alt="" />
+              </span>
+            )}
           </div>
         </div>
       </div>

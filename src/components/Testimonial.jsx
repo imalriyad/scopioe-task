@@ -104,7 +104,7 @@ const Testimonial = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex 2xl:gap-8 gap-4 border rounded-lg p-2 2xl:p-8 md:gap-6 mt-6">
+              <div className="flex 2xl:gap-8 gap-4 border rounded-lg p-2 2xl:p-8 md:gap-6 -pt-14">
                 <img src={testi2} className="w-[30%]" alt="" />
                 <div className="space-y-2 2xl:space-y-4 w-[70%]">
                   <span className="flex text-[#5C635A] items-center  md:text-sm text-[10px] 2xl:text-2xl gap-2">

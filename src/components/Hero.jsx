@@ -27,7 +27,7 @@ const Hero = () => {
             placeholder="ZIP code or city name"
             className="focus:outline-none bg-[#EEF2F5]  placeholder:text-[#c2c1c1]  px-4 py-3 rounded-lg w-full "
           />
-          <button className="bg-[#156BCA] px-8 py-3 text-white rounded-lg absolute right-0">
+          <button className="bg-[#156BCA] px-8 py-3 text-white rounded-r-lg absolute right-0">
             Go
           </button>
         </div>

@@ -2,6 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import NewCompo from "../components/NewCompo";
 import Home from "../pages/Home";
+import Registration from "../Auth/Registration";
+import Login from "../Auth/Login";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +39,14 @@ const router = createBrowserRouter([
         element: <NewCompo props={"Setting"}></NewCompo>,
       },
     ],
+  },
+  {
+    path: "/registration",
+    element: <Registration></Registration>,
+  },
+  {
+    path: "/login",
+    element: <Login></Login>,
   },
 ]);
 

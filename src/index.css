@@ -12,3 +12,15 @@
   font-style: normal;
 }
 
+@media (max-width: 1024px) {
+  /* Target tablets and smaller screens */
+  .tablet-and-mobile-bg {
+    background-image: url("./assets/mobilebg.png");
+  }
+}
+@media (min-width: 1025px) {
+  /* Target larger screens */
+  .tablet-and-mobile-bg {
+    background-image: none;
+  }
+}
