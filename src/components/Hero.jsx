@@ -1,6 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
-import heroImg from "../assets/heroimg.png"
+import { useContext } from "react";
+import heroImg from "../assets/heroimg.png";
+import { AuthContext } from "../context/AuthProvider";
+import { Link } from "react-router-dom";
 const Hero = () => {
+  const { setSearchText, handleSearch } = useContext(AuthContext);
+
   return (
     <div className="bg-white md:p-10 p-6 rounded-lg flex md:flex-row md:gap-4 gap-8 lg:gap-0 flex-col justify-between items-center h-auto my-6 w-[96%] mx-auto border">
       <div className="space-y-3">
@@ -24,12 +29,18 @@ const Hero = () => {
         <div className="relative max-w-lg">
           <input
             type="text"
+            onChange={(e) => setSearchText(e.currentTarget.value)}
             placeholder="ZIP code or city name"
             className="focus:outline-none bg-[#EEF2F5]  placeholder:text-[#c2c1c1]  px-4 py-3 rounded-lg w-full "
           />
-          <button className="bg-[#156BCA] px-8 py-3 text-white rounded-r-lg absolute right-0">
-            Go
-          </button>
+          <Link to={'/search'}>
+            <button
+              onClick={handleSearch}
+              className="bg-[#156BCA] px-8 py-3 text-white rounded-r-lg absolute right-0"
+            >
+              Go
+            </button>
+          </Link>
         </div>
       </div>
       <div>

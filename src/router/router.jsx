@@ -4,6 +4,8 @@ import NewCompo from "../components/NewCompo";
 import Home from "../pages/Home";
 import Registration from "../Auth/Registration";
 import Login from "../Auth/Login";
+import Search from "../pages/Search";
+import Detailspage from "../pages/Detailspage";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +22,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/search",
-        element: <NewCompo props={"Search"}></NewCompo>,
+        element: <Search></Search>,
       },
       {
         path: "/about",
@@ -37,6 +39,11 @@ const router = createBrowserRouter([
       {
         path: "/setting",
         element: <NewCompo props={"Setting"}></NewCompo>,
+      },
+      {
+        path: "/details/:id",
+        element: <Detailspage></Detailspage>,
+        loader: ({ params }) => fetch(`therapistInfo.json/:${params.id}`),
       },
     ],
   },

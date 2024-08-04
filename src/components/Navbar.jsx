@@ -13,14 +13,23 @@ import aboutIcon from "../assets/about.png";
 import heartIcon from "../assets/heart.png";
 import helpIcon from "../assets/help.png";
 import settingIcon from "../assets/setting.png";
-import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthProvider";
 
 const Navbar = () => {
   const [isOpenMenu, setOpenMenu] = useState(false);
-  const [user, setUser] = useState(false);
- 
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+console.log(user?.photoURL);
 
+  const handleLogout = () => {
+    logout()
+      .then(() => {
+        navigate("/login");
+      })
+      .catch((err) => console.log("logout"));
+  };
   return (
     <>
       {/* Mobile side menu */}
@@ -41,7 +50,11 @@ const Navbar = () => {
           </div>
           {user ? (
             <div className=" text-right pr-4 py-6">
-              <img src={bigProfile} className="mx-auto pl-10" alt="" />
+              <img
+                src={user?.photoURL ? user?.photoURL : bigProfile}
+                className="mx-auto pl-10"
+                alt=""
+              />
               <h1 className="text-2xl text-white pt-4">AL Riyad</h1>
               <p className="text-[#1A2634] text-xs pt-1">imalriyad@gmqil.com</p>
             </div>
@@ -160,7 +173,7 @@ const Navbar = () => {
         <div className="w-full border-b-[1px] border-b-[#E7E7E7] px-8 items-center flex justify-between h-20">
           {user ? (
             <div className="flex items-start gap-3">
-              <img src={profilePic} alt="" />
+              <img src={user?.photoURL ? user?.photoURL : profilePic} className="w-[45px]" alt="" />
               <span className="flex flex-col ">
                 <h1 className="font-medium text-[#152a16]">Al Riyad</h1>
                 <p className="text-xs text-[#5C635A]">imalriyad@gmail.com</p>
@@ -182,7 +195,10 @@ const Navbar = () => {
                 </span>
               </Link>
             ) : (
-              <span className="flex items-center gap-2 font-semibold text-[#F15E4A]">
+              <span
+                onClick={handleLogout}
+                className="flex items-center cursor-pointer gap-2 font-semibold text-[#F15E4A]"
+              >
                 Log Out
                 <img src={logoutIcon} alt="" />
               </span>

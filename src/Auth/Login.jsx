@@ -1,12 +1,37 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthBanner from "../shared/AuthBanner";
 import googleIcon from "../assets/google.png";
 import fbIcon from "../assets/facebook.png";
 import eyeIcon from "../assets/eyes.png";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthProvider";
+import { useForm } from "react-hook-form";
+
 const Login = () => {
-    const [passShow,setPassShow] = useState(false)
+  const [passShow, setPassShow] = useState(false);
+  const { login, googleLogin } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState(false);
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = (data) => {
+    const { email, password } = data;
+    login(email, password)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((err) => setErrorMessage(err.message));
+  };
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then((res) => {
+        navigate("/");
+
+        console.log(res.user);
+      })
+      .catch(() => {});
+  };
   return (
     <>
       <div className="max-w-screen-xl mx-auto md:px-8 lg:px-14 tablet-and-mobile-bg">
@@ -43,7 +68,10 @@ const Login = () => {
                 Welcome Back! Select a method to log in:
               </p>
               <div className="flex items-center gap-4 justify-around max-w-sm py-3">
-                <button className="bg-[#4285F3] flex items-center bg-gradient-to-r from-[#dedede] to-[#f4f1f1] capitalize px-8 gap-2 drop-shadow-md  font-medium text-[#152A16] rounded-lg  py-3">
+                <button
+                  onClick={handleGoogleLogin}
+                  className="bg-[#4285F3] flex items-center bg-gradient-to-r from-[#dedede] to-[#f4f1f1] capitalize px-8 gap-2 drop-shadow-md  font-medium text-[#152A16] rounded-lg  py-3"
+                >
                   <img src={googleIcon} className="w-[20px]" alt="" /> Google
                 </button>
                 <button className="bg-[#4285F3] flex items-center capitalize px-8 gap-2 drop-shadow-md  font-medium text-white rounded-lg  py-3">
@@ -51,22 +79,27 @@ const Login = () => {
                 </button>
               </div>
             </div>
-            <form className="slg:pace-y-4 w-full lg:max-w-sm bg-white p-4">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="lg:pace-y-4 w-full lg:max-w-sm bg-white p-4"
+            >
               <span className="flex flex-col gap-1">
                 <label htmlFor="email" className="font-medium">
                   Email
                 </label>
                 <input
+                  {...register("email", { required: true })}
                   type="email"
                   placeholder="Name"
                   className="focus:outline-none border  px-4 py-3 rounded-lg w-full "
                 />
               </span>
-              <span className="flex flex-col gap-1 relative">
+              <span className="flex flex-col gap-1 lg:pt-4 relative">
                 <label htmlFor="password" className="font-medium">
                   Password
                 </label>
                 <input
+                  {...register("password", { required: true })}
                   type={passShow ? "text" : "password"}
                   placeholder="Enter your password"
                   className="focus:outline-none border  px-4 py-3 rounded-lg w-full "
@@ -92,13 +125,14 @@ const Login = () => {
                 </p>
               </div>
               <br />
+              {errorMessage && <p className="text-red-500">{errorMessage}</p>}
               <div className=" w-full text-center">
                 {" "}
                 <button
                   type="submit"
                   className="bg-[#4285F3] font-medium text-white rounded-lg px-16 py-3"
                 >
-                  Sign up
+                  Sign In
                 </button>
                 <Link to={"/registration"}>
                   <p className="pt-3 lg:text-base text-xs">

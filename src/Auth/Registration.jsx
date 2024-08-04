@@ -1,13 +1,56 @@
 /* eslint-disable react/no-unescaped-entities */
 import googleIcon from "../assets/google.png";
 import fbIcon from "../assets/facebook.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthBanner from "../shared/AuthBanner";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import eyeIcon from "../assets/eyes.png";
+import { useForm } from "react-hook-form";
+import { AuthContext } from "../context/AuthProvider";
+import { updateProfile } from "firebase/auth";
 
 const Registration = () => {
   const [passShow, setPassShow] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
+  const { register, handleSubmit } = useForm();
+  const { registration, googleLogin, user } = useContext(AuthContext);
+  const navigate = useNavigate();
+  console.log(user?.photoURL);
+
+  const onSubmit = (data) => {
+    const { name, email, password, cPassword, isChecked } = data;
+    if (passShow.length < 6 || cPassword.length < 6) {
+      return setErrorMessage("Password Must be Six Digit or Longer");
+    }
+    if (passShow !== passShow) {
+      return setErrorMessage("Password Not macthing");
+    }
+
+    if (!isChecked) {
+      return setErrorMessage("Please accept terms and conditions");
+    }
+    registration(email, password)
+      .then((res) => {
+        updateProfile(res.user, {
+          displayName: name,
+        }).then(() => {
+          console.log("profile updated");
+          navigate("/login");
+        });
+      })
+      .catch((err) => setErrorMessage(err.message));
+  };
+
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then((res) => {
+        navigate("/");
+
+        console.log(res.user);
+      })
+      .catch(() => {});
+  };
+
   return (
     <div className="max-w-screen-xl  md:px-8 lg:px-14 tablet-and-mobile-bg">
       <div className="flex lg:flex-row flex-col-reverse items-center">
@@ -25,7 +68,7 @@ const Registration = () => {
             </Link>
           </span>
           <h1 className="text-[#152A16] lg:block hidden text-3xl font-medium">
-            Login In To Your Account
+            Sign up In To Your Account
           </h1>
           <h1 className="text-[#ffff] text-center  text-sm px-6 lg:hidden block  font-medium">
             Sign In to view all the <br /> massage therapists
@@ -39,9 +82,12 @@ const Registration = () => {
             <h1 className="text-[#152A16] pb-6 lg:pb-0 font-semibold text-center lg:hidden block text-xl ">
               Sign Up
             </h1>
-           
+
             <div className="flex items-center gap-4 justify-around max-w-sm py-3">
-              <button className="bg-[#4285F3] flex items-center bg-gradient-to-r from-[#dedede] to-[#f4f1f1] capitalize px-8 gap-2 drop-shadow-md  font-medium text-[#152A16] rounded-lg  py-3">
+              <button
+                onClick={handleGoogleLogin}
+                className=" flex items-center bg-gradient-to-r from-[#dedede] to-[#f4f1f1] capitalize px-8 gap-2 drop-shadow-md  font-medium text-[#152A16] rounded-lg  py-3"
+              >
                 <img src={googleIcon} className="w-[20px]" alt="" /> Google
               </button>
               <button className="bg-[#4285F3] flex items-center capitalize px-8 gap-2 drop-shadow-md  font-medium text-white rounded-lg  py-3">
@@ -49,13 +95,17 @@ const Registration = () => {
               </button>
             </div>
           </div>
-          <form className="space-y-4 lg:max-w-sm bg-white lg:px-0 px-4">
+          <form
+            className="space-y-4 lg:max-w-sm bg-white lg:px-0 px-4"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <span className="flex flex-col gap-1">
               <label htmlFor="name" className="font-medium">
                 Name
               </label>
               <input
                 type="text"
+                {...register("name", { required: true })}
                 placeholder="Name"
                 className="focus:outline-none border  px-4 py-3 rounded-lg w-full "
               />
@@ -66,7 +116,8 @@ const Registration = () => {
               </label>
               <input
                 type="email"
-                placeholder="Name"
+                placeholder="Email"
+                {...register("email", { required: true })}
                 className="focus:outline-none border  px-4 py-3 rounded-lg w-full "
               />
             </span>
@@ -77,6 +128,7 @@ const Registration = () => {
               <input
                 type={passShow ? "text" : "password"}
                 placeholder="Enter your password"
+                {...register("password", { required: true })}
                 className="focus:outline-none border  px-4 py-3 rounded-lg w-full "
               />
               <img
@@ -92,6 +144,7 @@ const Registration = () => {
               </label>
               <input
                 type={passShow ? "text" : "password"}
+                {...register("cPassword", { required: true })}
                 placeholder="Enter your password"
                 className="focus:outline-none border  px-4 py-3 rounded-lg w-full "
               />
@@ -104,12 +157,13 @@ const Registration = () => {
             </span>
             <input
               type="checkbox"
-              name="chechBox"
               className="cursor-pointer"
+              {...register("isChecked")}
               id=""
             />
             <span className="pl-1 text-sm"> Accept Terms of Service</span>{" "}
             <br />
+            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
             <div className=" w-full text-center">
               {" "}
               <button
