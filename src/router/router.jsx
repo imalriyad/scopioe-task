@@ -43,7 +43,7 @@ const router = createBrowserRouter([
       {
         path: "/details/:id",
         element: <Detailspage></Detailspage>,
-        loader: ({ params }) => fetch(`/therapistInfo.json/:${params.id}`),
+        loader: () => fetch(`/therapistInfo.json`),
       },
     ],
   },
